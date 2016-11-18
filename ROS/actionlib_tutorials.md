@@ -1,5 +1,7 @@
 # actionlib 教程
 
+该教程仅仅记录关键步骤，没有详细的细节，可以用来梳理思路，如果想要详细教程，请转到[官网](http://wiki.ros.org/actionlib)
+
 ## 通信与配置
 
 一个server服务器端，一个client客户端，双方通信依靠action定义的三个数据量：Goal（c2s)，FeedBack（s2c），Result（s2c）
