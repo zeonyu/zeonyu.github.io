@@ -1,4 +1,3 @@
-zeonyu.github.io
-Github pages.
+# zeonyu.github.io 记录说明
 
-This is the repository that record the markdown notes. Including ROS and ML related stuffs.
+该目录用于记录工作学习中用到的一些知识点，分类比较杂乱，主要是用来对逻辑的梳理，不是完整的教程，因此内容必然杂乱且零散，但是也会有一些自己的理解，希望这些转化后的知识可以在今后方便回忆。
