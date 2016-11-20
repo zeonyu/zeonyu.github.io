@@ -54,8 +54,10 @@ II中要求只是基于I中的结果做一次vector的反转，因此直接使�
 思路一：非递归
 
 使用queue，先root压入，然后queue非空，则把当前的所有放在一个vector
+
+
     
-    
+```    
     class Solution {
     
     public:
@@ -65,8 +67,6 @@ II中要求只是基于I中的结果做一次vector的反转，因此直接使�
     vector<vector<int>> res;
     
     if(!root) return res;
-    
-    
     
     
     queue<TreeNode*> q;
@@ -112,7 +112,7 @@ II中要求只是基于I中的结果做一次vector的反转，因此直接使�
     }
     
     };
-    
+   ``` 
     
     
 
