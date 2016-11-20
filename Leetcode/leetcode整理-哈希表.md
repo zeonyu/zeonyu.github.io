@@ -1,14 +1,5 @@
----
-title: 【哈希表】
-tags: []
-notebook: 0. 精华整理贴
----
 
-<div markdown="1" style=";">
-
-前言： 主要内容包括：数组、链表、双指针、哈希表
-
-# 3\. HashTable
+# 3. HashTable
 
 leetcode相关题目有12题：
 
@@ -29,18 +20,18 @@ leetcode相关题目有12题：
 
 ### Count Primes
     
-    
+    ```
     Description:
     
     Count the number of prime numbers less than a non-negative number, n.
-    
+    ```
     
 
 思路一：
 
 质数的计算方法：除了本身和1，不能被其他任何数整除。判断条件就是用比他小的所有数整除。因此可以得到一个isPrime的函数用来判断是否为质数。然后主函数里循环，如果是质数，count++。 code：
     
-    
+```    
     class Solution {
     public:
         int countPrimes(int n) {
@@ -60,17 +51,16 @@ leetcode相关题目有12题：
         }
     
     };
-    
+``` 
 
 算法的结果是对的，但是对于 n 很大的情况，会超时：time limit exceeded，没有满足题目的要求。
 
-思路二：厄拉多塞筛法
+思路二：[厄拉多塞筛法](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
 
-[reference](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
 
 定义一个数组来储存哪个是质数，初始化为true。然后对每个元素，如果该数是质数，则其所有倍数都是非质数。对n个数都遍历一遍后，计算质数的个数。 code：
     
-    
+```
     class Solution {
     public:
         int countPrimes(int n) {
@@ -89,13 +79,11 @@ leetcode相关题目有12题：
             return count;
         }
     };
-    
+```
 
-效率比较靠后：
-<en-media hash="0155cdf4336245d938ad8fbea7050869" style="height: auto;" type="image/jpeg"/>
 
-修改条件：j = i * i ：
-<en-media hash="a111573484e4f1dddee7f4eb769ed0b5" style="height: auto;" type="image/jpeg"/>
+
+效率比较靠后,修改条件：j = i * i 
 
 思考：
 
@@ -107,7 +95,7 @@ leetcode相关题目有12题：
 
 对于一个i，如果有两个数的乘积`<n`，则为非质数。
     
-    
+```
     class Solution {
     public:
         int countPrimes(int n) {
@@ -133,14 +121,15 @@ leetcode相关题目有12题：
             return res;
         }
     };
-    
+ ```
+
 
 由于使用了很多的循环，因此效率还是不高： 
 <en-media hash="0dc95d75918ee39a2edc800fb955ea30" style="height: auto;" type="image/jpeg"/>
 
 ### Isomorphic Strings 同形字符串
     
-    
+ ```   
     Given two strings s and t, determine if they are isomorphic.
     
     Two strings are isomorphic if the characters in s can be replaced to get t.
@@ -157,26 +146,25 @@ leetcode相关题目有12题：
     
     Note:
     You may assume both s and t have the same length.
-    
+  ```  
 
 hashmap心得：
 
   1. hashmap其实就是个python里的dic，支持key/value对，一般都与查找有关。 这里的重点在于要找的是一一对应，而不仅仅是多对一或者一对多，因此考虑两个map同时检测。 首先是一个for循环，对每个char进行判断。对每个元素，如果key在map中找不到，则建立一个相应的对应关系；如果找到了，还需要都是相互对应，即一一对应，如果没有一一对应，即其中一个不对应，那就设置为 false。
 
   2. 时刻牢记两个条件，找到没，对应没。这也是为什么hashmap中经常出现两个if嵌套的原因。比如：
-    
-    
+  ```  
     else if(m1.find(s[i]) != m1.end() && m2.find(t[i]) != m2.end()){
                     if(m1[s[i]] != t[i] || m2[t[i]] != s[i]){
                         flag = false;
                         //break;
                     }
                 }
-    
+   ``` 
 
-  1. 一一对应，维护两个map
+  3. 一一对应，维护两个map
     
-    
+```
     class Solution {
     public:
         bool isIsomorphic(string s, string t) {
@@ -198,7 +186,7 @@ hashmap心得：
             return flag;
         }
     };
-    
+```
 
 ### Valid Sudoku
 
@@ -206,7 +194,7 @@ hashmap心得：
 
 ### Intersection of Two Arrays
     
-    
+```
     Given two arrays, write a function to compute their intersection.
     
     Example:
@@ -215,10 +203,7 @@ hashmap心得：
     Note:
     Each element in the result must be unique.
     The result can be in any order.
-    
-
-首先看一下这题的tag：
-<en-media hash="7d7579ecc5fe083a0d93b94fdfef277f" style="height: auto;" type="image/jpeg"/>
+```
 
 很明显，这是一道开放题，可以有很多种解法。
 
@@ -226,7 +211,7 @@ hashmap心得：
 
 wrong code：
     
-    
+```
     public:
         vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
             unordered_set<int> set1;
@@ -246,11 +231,11 @@ wrong code：
             }
             return result;
         }
-    
+```
 
 set的方法：****
     
-    
+```
     class Solution {
     public:
         vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
@@ -264,10 +249,9 @@ set的方法：****
             return ans;
         }
     };
-    
+```
 
-效率非常好：
-<en-media hash="4e6dbcc1e1415276f8cd41ac79896ce7" style="height: auto;" type="image/jpeg"/>
+效率非常好
 
 思路同样是使用set，但是用法非常巧妙，对于nums1直接初始化一个 set，免去了后面还需要手动实现nums1加入set的操作，这个操作值得学习。对于nums2中的元素，如果set中可以erase，那么首先表明这个元素是在nums1中的，而且同时删除了这个元素，其实我觉得即使不用删除，直接检测在不在里面也是可以的，这个时候就可以放在res中。
 
@@ -281,7 +265,7 @@ nums1中的元素，在nums2中，并且不再result中，则push_back。（该�
 
 code：
     
-    
+```
     class Solution {
     public:
         vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
@@ -298,7 +282,7 @@ code：
     
         }
     };
-    
+```
 
 效率很低：
 <en-media hash="1b328191f46fb76e2611b0966e880355" style="height: auto;" type="image/jpeg"/>
@@ -307,7 +291,7 @@ code：
 
 先排序，移动直到两个数相等，如果不在res里，就push_back。这里的难点在于，如何检测是否在res中。这里的方法是如果res中上一个加入的元素与现在的元素相等，那就是多余，就不加，反之，则加入。
     
-    
+```
     class Solution {  
     public:  
         vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {  
@@ -332,18 +316,17 @@ code：
             return res;  
         }  
     };
-    
+```
 
 注意这个条件：`res.size() == 0 || res.back() != nums1[i]`，缺一不可。因为res.back的前提是res不为空
 
-效果很赞：
-<en-media hash="36a85951ddbdce0aa2e1b1897a45d905" style="height: auto;" type="image/jpeg"/>
+效果很赞
 
 方法四：hashmap
 
 求两个数组的交集（其结果是一系列数字）。只要数组2中的数字出现在数组1中，他就是交集。
     
-    
+```
     class Solution {  
     public:  
         vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {  
@@ -362,16 +345,15 @@ code：
             return result;     
         }  
     };  
-    
+```
 
-效率竟然还不错：
-<en-media hash="7d7579ecc5fe083a0d93b94fdfef277f" style="height: auto;" type="image/jpeg"/>
+效率还不错
 
 方法五：
 
 nums1加入map，value为true，意思是nums1中的元素存在，且没有被使用过。对于nums2中的元素，如果在map中找到了，并且值为true，就是还没有使用过，那么加入res，同时设置value为false；如果值为false，则意味着已经加入过了，就不再加入。这属于对数组（source）也操作。
     
-    
+```
     class Solution {
     public:
         vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
@@ -396,14 +378,13 @@ nums1加入map，value为true，意思是nums1中的元素存在，且没有被�
             return res;
         }
     };
-    
+```
 
-效率真心不咋的：
-<en-media hash="0f0ddf8f6a3614e1a90b361b109b70bf" style="height: auto;" type="image/jpeg"/>
+效率真心不咋的
 
 ### Intersection of Two Arrays II
     
-    
+```
     Given two arrays, write a function to compute their intersection.
     
     Example:
@@ -416,13 +397,13 @@ nums1加入map，value为true，意思是nums1中的元素存在，且没有被�
     What if the given array is already sorted? How would you optimize your algorithm?
     What if nums1's size is small compared to nums2's size? Which algorithm is better?
     What if elements of nums2 are stored on disk, and the memory is limited such that you cannot load all elements into the memory at once?
-    
+```
 
 思路一：九章算法 双指针
 
 对两个数组排序，然后双指针，分别指向头，如果其中一个指针指向的元素小，则该指针后移一个，否则他们相等，那就push_back，然后两个指针都++
     
-    
+```
     class Solution {
     public:
         vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
@@ -445,7 +426,7 @@ nums1加入map，value为true，意思是nums1中的元素存在，且没有被�
             return intersect;
         }
     };
-    
+```
 
 效率可观： 
 <en-media hash="67fa56003e36c58817e3908c7aa598e7" style="height: auto;" type="image/jpeg"/>
@@ -458,7 +439,7 @@ nums1加入map，value为true，意思是nums1中的元素存在，且没有被�
 
 code：
     
-    
+```
     class Solution {
     public:
         vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
@@ -484,7 +465,7 @@ code：
             return result;
         }
     };
-    
+```
 
 效率非常低： 
 <en-media hash="1d9e075defe38f234f0e5f8b61d4c8cb" style="height: auto;" type="image/jpeg"/>
@@ -497,7 +478,7 @@ code：
 
 思路四：nums1 建立hashmap，nums2 查找
     
-    
+```
     class Solution {  
     public:  
         vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {  
@@ -513,14 +494,14 @@ code：
             return result;  
         }  
     };  
-    
+```
 
 效率一般： 
 <en-media hash="a540b2d179ed6d543b294a35d8d9d9c5" style="height: auto;" type="image/jpeg"/>
 
 ### Valid Anagram 由颠倒字母顺序而构成的字 -*HashTable Sort*
     
-    
+```
     Given two strings s and t, write a function to determine if t is an anagram of s.
     
     For example,
@@ -529,7 +510,7 @@ code：
     
     Note:
     You may assume the string contains only lowercase alphabets.
-    
+```
 
 思路：很明显就是计算一个字符串中每个元素出现过的次数。hashmap。
 
@@ -537,7 +518,7 @@ code：
 
 暴力算法：用两个map统计每个string中每个字母出现的次数，然后比较两个map是否相同。 第一次写代码的心得： * 统计次数的代码很繁琐
     
-    
+```
     for(int i=0; i < s.size(); i++) {
                 if(map.find(s[i]) == s.end()) {
                     // not in map
@@ -547,20 +528,20 @@ code：
                     map[s[i]]++;
                 }
             }
-    
+```
 
 人家的方法，学习参考一下：
     
-    
+```
     for (int i = 0; i < s.size(); i++) {  
                 countsmap[s[i]]++;  
                 countsmap[t[i]]--;  
             }  
-    
+```
 
 通过这个改进后，代码accepted：
     
-    
+```
     class Solution {
     public:
         bool isAnagram(string s, string t) {
@@ -577,12 +558,17 @@ code：
             return true;
         }
     };
-    
+```
 
 效率居中：
 <en-media hash="1b7caf32eb6179f688b030b2389c4c66" style="height: auto;" type="image/jpeg"/>
 
-key：1. 检测长度是否一样，不一样的直接返回false；2. 每个char的count，在s中则++，t中则--，非常巧妙；3. map中的元素如果不存在，会自动调用构造函数（虽然我并没有查到构造函数中有这一项），插入一个key对应的pair，并且有对应的value（应该默认是0），这样在下次对map进行操作的时候就不用检测是不是在这么繁琐；4. string有两个method：length和size都是返回大小，还有begin和end；
+key：
+1. 检测长度是否一样，不一样的直接返回false；
+2. 每个char的count，在s中则++，t中则--，非常巧妙；
+3. map中的元素如果不存在，会自动调用构造函数（虽然我并没有查到构造函数中有这一项），插入一个key对应的pair，并且有对应的value（应该默认是0），这样在下次对map进行操作的时候就不用检测是不是在这么繁琐；
+4. string有两个method：length和size都是返回大小，还有begin和end；
+
 
 方法二：排序后一致
 
@@ -590,8 +576,7 @@ key：1. 检测长度是否一样，不一样的直接返回false；2. 每个cha
 
 code:
     
-    
-    class Solution {
+```    class Solution {
     public:
         bool isAnagram(string s, string t) {
             if(s.length() != t.length()) return false;
@@ -600,7 +585,7 @@ code:
             return s==t;
         }
     };
-    
+```
 
 排序的速度竟然这么慢，有一点震惊。
 <en-media hash="d145ed48eeb69dc20a8a20103d308137" style="height: auto;" type="image/jpeg"/>
@@ -611,7 +596,7 @@ key：1. sort函数：对int型的sort默认是升序排列；2. char也是一�
 
 code:
     
-    
+```
     class Solution {
     public:
         bool isAnagram(string s, string t) {
@@ -627,14 +612,14 @@ code:
             return true;
         }
     };
-    
+```
 
 效率超过67%，很不错：
 <en-media hash="431300e4f3cd7f61808555b1b9e86cba" style="height: auto;" type="image/jpeg"/>
 
 ### Happy Number
     
-    
+```
     Write an algorithm to determine if a number is "happy".
     
     A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.
@@ -645,15 +630,17 @@ code:
     82 + 22 = 68
     62 + 82 = 100
     12 + 02 + 02 = 1
-    
+```
 
 思路一：（完全参考答案）（不甚理解） 首先考虑和为一，计算么个数位的字符和很简单，然后在循环，也很简单，这样框架就搭出来了。然后考虑不收敛一直循环的情况，设置一个set或map，每一次的和push进map，如果已经存在，则表示已经进入循环，直接返回false（但其实我觉得应该是true，因为题中说到循环的也是happy number）
 
-key：1. return很讲究，最后一定要加入return，而且while循环体中就需要包含true和false的情况；2.
+key：
+1. return很讲究，最后一定要加入return，而且while循环体中就需要包含true和false的情况；
+2.
 
 code:
     
-    
+```
     class Solution {
     public:
         bool isHappy(int n) {
@@ -675,20 +662,53 @@ code:
             return false;
         }
     };
-    
-<en-media hash="07a53ae74a1b41a99bc84447fe3a59a6" style="height: auto;" type="image/jpeg"/>
+```
+
+
 
 * * *
 
-另一个代码，思路大同小异 code: `bool isHappy(int n) { unordered_set<int> visited; while (n != 1) { if (visited.find(n) != visited.end()) return false; visited.insert(n); int sum = 0; while (n) { sum += ((n % 10)*(n % 10)); n /= 10; } n = sum; } return true; }`
+另一个代码，思路大同小异 code: 
+
+```
+bool isHappy(int n) { 
+    unordered_set<int> visited; 
+    while (n != 1) { 
+        if (visited.find(n) != visited.end())  return false; 
+        visited.insert(n); 
+        int sum = 0; 
+        while (n) { 
+            sum += ((n % 10)*(n % 10)); 
+            n /= 10; 
+        } 
+        n = sum; 
+    } 
+    return true; 
+}
+```
 
 思路二： 完全不理解
 
-code： `class Solution { public: bool isHappy(int n) { while(n>6){ int next = 0; while(n){ next+=(n%10)*(n%10); n/=10; } n = next; } return n==1; } };`
+code： 
+
+```
+class Solution { 
+    public: 
+    bool isHappy(int n) { 
+        while(n>6){ 
+            int next = 0; 
+            while(n){ 
+                next+=(n%10)*(n%10); n/=10; 
+            } n = next; 
+        } 
+        return n==1; 
+    } 
+};
+```
 
 ### Bulls and Cows
     
-    
+```
     You are playing the following Bulls and Cows game with your friend: You write down a number and ask your friend to guess what the number is. Each time your friend makes a guess, you provide a hint that indicates how many digits in said guess match your secret number exactly in both digit and position (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows"). Your friend will use successive guesses and hints to eventually derive the secret number.
     
     For example:
@@ -704,7 +724,7 @@ code： `class Solution { public: bool isHappy(int n) { while(n>6){ int next = 0
     Friend's guess: "0111"
     In this case, the 1st 1 in friend's guess is a bull, the 2nd or 3rd 1 is a cow, and your function should return "1A1B".
     You may assume that the secret number and your friend's guess only contain digits, and their lengths are always equal.
-    
+```
 
 思路一：
 
@@ -716,7 +736,7 @@ code： `class Solution { public: bool isHappy(int n) { while(n>6){ int next = 0
 
 code:
     
-    
+```
     class Solution {
     public:
         string getHint(string secret, string guess) {
@@ -735,13 +755,13 @@ code:
             return to_string(a) + "A" + to_string(b) + "B";
         }
     };
-    
+```
 
 思路三： 使用数组nums[n]来记录出现的次数。如果对应元素相等，则为A，如果不相等，此时第i个secret的+1，guess中的-1，即每一次都要标记；在这个作用域内，检测，如果secret中出现的位置为负，则表示之前已经guess中已经出现过，那么此刻就匹配上了，b++，对应位置++，如果guess的位置为正数，表示之前secret中已经出现过一次，那么此刻就匹配上了，b++，对应位置++；对于不在secret中的guess，则让他一直为负吧
 
 code:
     
-    
+```
     class Solution {
     public:
         string getHint(string secret, string guess) {
@@ -759,35 +779,16 @@ code:
             return to_string(a) + "A" + to_string(b) + "B";
         }
     };
-    
-    /*
-    class Solution {
-    public:
-        string getHint(string secret, string guess) {
-            int n = secret.size();
-            int b = 0, a = 0;
-            int nums[10] = {0};
-            for(int i=0; i<n; ++i){
-                if(secret[i]==guess[i]){
-                    a++;
-                }else{
-                    if(nums[secret[i]-'0']<0) b++;
-                    if(nums[guess[i]-'0']>0) b++;
-                    nums[secret[i]-'0']++;
-                    nums[guess[i]-'0']--;
-                }
-            }
-            return to_string(a)+"A"+to_string(b)+"B";
-        }
-    };
-    */
-    
+```
 
-注意：两个易错点：1. if(nums[secret[i]-'0']<0) 容易写成 if(nums[secret[i]]-'0'<0)； 2. 一定要注意，开辟nums的是一定是要给10个空间，代表从0到9，而不是 2 * secret.length()，因为即使每个字符串都是4个字节，但是其中的数字可以超过8，而一旦超过8就出现了越界，不是我想的那种，完美的每个不同的字符占据一个空间，因为我们存储的时候是跟0比较的，所以应该是10的空间； 3. 很多时候的小错误都是一些stupid的问题，细心检查，有时候不一定是算法的问题
+注意：两个易错点：
+1. if(nums[secret[i]-'0']<0) 容易写成 if(nums[secret[i]]-'0'<0)； 
+2. 一定要注意，开辟nums的是一定是要给10个空间，代表从0到9，而不是 2 * secret.length()，因为即使每个字符串都是4个字节，但是其中的数字可以超过8，而一旦超过8就出现了越界，不是我想的那种，完美的每个不同的字符占据一个空间，因为我们存储的时候是跟0比较的，所以应该是10的空间； 
+3. 很多时候的小错误都是一些stupid的问题，细心检查，有时候不一定是算法的问题
 
 ### Word Pattern
     
-    
+```
     Given a pattern and a string str, find if str follows the same pattern.
     
     Here follow means a full match, such that there is a bijection between a letter in pattern and a non-empty word in str.
@@ -799,13 +800,13 @@ code:
     pattern = "abba", str = "dog dog dog dog" should return false.
     Notes:
     You may assume pattern contains only lowercase letters, and str contains lowercase letters separated by a single space.
-    
+```
 
 思路一：http://www.cnblogs.com/grandyang/p/4857022.html
 
 istringstream 进行分割处理，双向hashmap
     
-    
+```
     class Solution {
     public:
         bool wordPattern(string pattern, string str) {
@@ -825,11 +826,11 @@ istringstream 进行分割处理，双向hashmap
             return i == pattern.size();
         }
     };
-    
+```
 
 解法二：
     
-    
+```
     class Solution {
     public:
         bool wordPattern(string pattern, string str) {
@@ -847,13 +848,13 @@ istringstream 进行分割处理，双向hashmap
             return i == pattern.size();
         }
     };
-    
+```
 
 思路二：
 
 手动分割，取子字符串，双向hashmap
     
-    
+```
     class Solution {
     public:
         bool wordPattern(string pattern, string str) {  
@@ -878,7 +879,7 @@ istringstream 进行分割处理，双向hashmap
         return true;  
     }  
     };
-    
+```
 
 ## 3.1 哈希表方法总结
 
@@ -890,462 +891,3 @@ istringstream 进行分割处理，双向hashmap
   * `unordered_map <type, type>`
 
 哈希表主要与数组结合紧密，题目中都会相互用到。
-
-### 3.1.1 多方法融合示例 - Hashmap Array TwoPointers
-
-#### Intersection of Two Arrays
-    
-    
-    Given two arrays, write a function to compute their intersection.
-    
-    Example:
-    Given nums1 = [1, 2, 2, 1], nums2 = [2, 2], return [2].
-    
-    Note:
-    Each element in the result must be unique.
-    The result can be in any order.
-    
-
-首先看一下这题的tag：
-<en-media hash="7d7579ecc5fe083a0d93b94fdfef277f" style="height: auto;" type="image/jpeg"/>
-
-很明显，这是一道开放题，可以有很多种解法。
-
-算法一：set 先把nums1和nums2都转化为set，如果set2的元素在set1中，则加入result。但有一个问题，不知道如何检测set2是否在set1中。
-
-wrong code：
-    
-    
-    public:
-        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-            unordered_set<int> set1;
-            unordered_set<int> set2;
-            vector<int> result;
-            for(int i=0; i < nums1.size(); i++) {
-                if(set1.find(nums1[i]) == set1.end()) set1.insert(nums1[i]);
-            }
-            for(int i=0; i < nums2.size(); i++) {
-                if(set2.find(nums2[i]) == set2.end()) set2.insert(nums2[i]);
-            }
-            for(int i=0; i < set2.size(); i++) {
-                if(set1.find(set2[i])) {
-                    result.push_back(set2[i]);
-                    set2.erase(set2[i]);
-                }
-            }
-            return result;
-        }
-    
-
-set的方法：****
-    
-    
-    class Solution {
-    public:
-        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-            unordered_set<int> m(nums1.begin(),nums1.end());
-            vector<int> ans;
-            for(auto i:nums2){
-                if(m.erase(i)){
-                    ans.push_back(i);
-                }
-            }
-            return ans;
-        }
-    };
-    
-
-效率非常好：
-<en-media hash="4e6dbcc1e1415276f8cd41ac79896ce7" style="height: auto;" type="image/jpeg"/>
-
-思路同样是使用set，但是用法非常巧妙，对于nums1直接初始化一个 set，免去了后面还需要手动实现nums1加入set的操作，这个操作值得学习。对于nums2中的元素，如果set中可以erase，那么首先表明这个元素是在nums1中的，而且同时删除了这个元素，其实我觉得即使不用删除，直接检测在不在里面也是可以的，这个时候就可以放在res中。
-
-方法二：双重条件
-
-首先分析是两个数组，检测相同的元素，但是还不能有重复。两个条件。
-
-如果nums1中 的元素在nums2中找到，说明有相同的元素，第一个条件满足；第二个条件，不能相同，那么有两个思路，一个是对数组（source）去重，另一个是对结果去重，可以检测如果在res就不加入，或者全部添加后再移除多余的。我们的这个方法使用第二个，如果相同的元素在res中已经有了，那么我们就不再加入。全部加入再移除多余的方法用在高层次语言，比如python，一行代码解决，但是c++的话需要多余的操作。
-
-nums1中的元素，在nums2中，并且不再result中，则push_back。（该方法没有用到hashmap）
-
-code：
-    
-    
-    class Solution {
-    public:
-        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-            vector<int> res;
-            if(!nums1.empty() || !nums2.empty()) {
-                for(int i=0;i<nums1.size();i++)
-                    {
-                        if(find(nums2.begin(),nums2.end(),nums1[i])!=nums2.end())//if nums1[i] is in nums2
-                            if(find(res.begin(),res.end(),nums1[i])==res.end())// if nums[i] not in res
-                                res.push_back(nums1[i]);
-                    }
-            }
-                return res;
-    
-        }
-    };
-    
-
-效率很低：
-<en-media hash="1b328191f46fb76e2611b0966e880355" style="height: auto;" type="image/jpeg"/>
-
-方法三：排序后对数组进行比较
-
-先排序，移动直到两个数相等，如果不在res里，就push_back。这里的难点在于，如何检测是否在res中。这里的方法是如果res中上一个加入的元素与现在的元素相等，那就是多余，就不加，反之，则加入。
-    
-    
-    class Solution {  
-    public:  
-        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {  
-            sort(nums1.begin(), nums1.end());  
-            sort(nums2.begin(), nums2.end());  
-            vector<int> res;  
-            int i = 0, j = 0;  
-            while (i < nums1.size() && j < nums2.size())  
-            {  
-                if (nums1[i] < nums2[j])  
-                    i++;  
-                else if (nums1[i] > nums2[j])  
-                    j++;  
-                else  
-                {
-                    if (res.size() == 0 || res.back() != nums1[i])  
-                        res.push_back(nums1[i]);  
-                    i++;  
-                    j++;  
-                }  
-            }  
-            return res;  
-        }  
-    };
-    
-
-注意这个条件：`res.size() == 0 || res.back() != nums1[i]`，缺一不可。因为res.back的前提是res不为空
-
-效果很赞：
-<en-media hash="36a85951ddbdce0aa2e1b1897a45d905" style="height: auto;" type="image/jpeg"/>
-
-方法四：hashmap
-
-求两个数组的交集（其结果是一系列数字）。只要数组2中的数字出现在数组1中，他就是交集。
-    
-    
-    class Solution {  
-    public:  
-        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {  
-            vector<int> result;  
-            unordered_map<int,int> mapping;  
-            for(int i=0;i < nums1.size();i++)  
-                mapping.insert(make_pair(nums1[i],i+1));  
-            for(int i=0;i < nums2.size();i++)  
-            {  
-                if(mapping[nums2[i]]>0)//找到了交集的数字，获取结果  
-                {  
-                    mapping[nums2[i]]=0;//清零  
-                    result.push_back(nums2[i]);  
-                }  
-            }  
-            return result;     
-        }  
-    };  
-    
-
-效率竟然还不错：
-<en-media hash="7d7579ecc5fe083a0d93b94fdfef277f" style="height: auto;" type="image/jpeg"/>
-
-方法五：
-
-nums1加入map，value为true，意思是nums1中的元素存在，且没有被使用过。对于nums2中的元素，如果在map中找到了，并且值为true，就是还没有使用过，那么加入res，同时设置value为false；如果值为false，则意味着已经加入过了，就不再加入。这属于对数组（source）也操作。
-    
-    
-    class Solution {
-    public:
-        vector<int> intersection(vector<int>& nums1, vector<int>& nums2) {
-    
-            if(nums1.size() == 0 || nums2.size() == 0){
-                return vector<int>();
-            }
-    
-            map<int,bool> map;
-            vector<int> res;
-    
-            for(int val:nums1){
-                map[val] = true;
-            }
-    
-            for(int val:nums2){
-                if(map.count(val) && map[val] == true){ //找到了，并且值为true
-                    res.push_back(val);
-                    map[val] = false;
-                }
-            }
-            return res;
-        }
-    };
-    
-
-效率真心不咋的：
-<en-media hash="0f0ddf8f6a3614e1a90b361b109b70bf" style="height: auto;" type="image/jpeg"/>
-
-#### Valid Anagram 由颠倒字母顺序而构成的字 -*HashTable Sort*
-    
-    
-    Given two strings s and t, write a function to determine if t is an anagram of s.
-    
-    For example,
-    s = "anagram", t = "nagaram", return true.
-    s = "rat", t = "car", return false.
-    
-    Note:
-    You may assume the string contains only lowercase alphabets.
-    
-
-思路：很明显就是计算一个字符串中每个元素出现过的次数。hashmap。
-
-方法一：
-
-暴力算法：用两个map统计每个string中每个字母出现的次数，然后比较两个map是否相同。 第一次写代码的心得： * 统计次数的代码很繁琐
-    
-    
-    for(int i=0; i < s.size(); i++) {
-                if(map.find(s[i]) == s.end()) {
-                    // not in map
-                    map.insert(make_pair(s[i],1));      
-                } else {
-                    // in map and count++
-                    map[s[i]]++;
-                }
-            }
-    
-
-人家的方法，学习参考一下：
-    
-    
-    for (int i = 0; i < s.size(); i++) {  
-                countsmap[s[i]]++;  
-                countsmap[t[i]]--;  
-            }  
-    
-
-通过这个改进后，代码accepted：
-    
-    
-    class Solution {
-    public:
-        bool isAnagram(string s, string t) {
-            if(s.size() != t.length()) return false;
-            unordered_map<char, int> map;
-            for(int i=0, j=0; i < s.size(); i++) {
-                map[s[i]]++;
-                map[t[i]]--;
-            }
-    
-            for(unordered_map<char, int>::iterator ite=map.begin(); ite != map.end(); ite++) {
-                if(ite->second) return false;
-            }
-            return true;
-        }
-    };
-    
-
-效率居中：
-<en-media hash="1b7caf32eb6179f688b030b2389c4c66" style="height: auto;" type="image/jpeg"/>
-
-key：1. 检测长度是否一样，不一样的直接返回false；2. 每个char的count，在s中则++，t中则--，非常巧妙；3. map中的元素如果不存在，会自动调用构造函数（虽然我并没有查到构造函数中有这一项），插入一个key对应的pair，并且有对应的value（应该默认是0），这样在下次对map进行操作的时候就不用检测是不是在这么繁琐；4. string有两个method：length和size都是返回大小，还有begin和end；
-
-方法二：排序后一致
-
-思路：如果只是字母顺序，排序后是一样的；就是说，字母也是可以排序的！！通过ACSII码值
-
-code:
-    
-    
-    class Solution {
-    public:
-        bool isAnagram(string s, string t) {
-            if(s.length() != t.length()) return false;
-            sort(s.begin(), s.end());
-            sort(t.begin(), t.end());
-            return s==t;
-        }
-    };
-    
-
-排序的速度竟然这么慢，有一点震惊。
-<en-media hash="d145ed48eeb69dc20a8a20103d308137" style="height: auto;" type="image/jpeg"/>
-
-key：1. sort函数：对int型的sort默认是升序排列；2. char也是一个码，可以加减，可以排序！！
-
-思路三： 也是计算的思想，与'a'相比，每个字母的差值一定，也对应每个字母出现的次数，同理，s+1，t-1，然后检测这个数组是否都是0。这是数组用来计数问题的经典操作。
-
-code:
-    
-    
-    class Solution {
-    public:
-        bool isAnagram(string s, string t) {
-            if(s.length() != t.length()) return false;
-            vector<int> cnt(26, 0);
-            for(int i=0; i < s.length(); i++) {
-                cnt[s[i]-'a']++;
-                cnt[t[i]-'a']--;
-            }
-            for(int i=0; i < 26; i++) {
-                if(cnt[i] != 0) return false;
-            }
-            return true;
-        }
-    };
-    
-
-效率超过67%，很不错：
-<en-media hash="431300e4f3cd7f61808555b1b9e86cba" style="height: auto;" type="image/jpeg"/>
-
-### 3.2.2 一一对应的查找关系
-
-#### Isomorphic Strings 同形字符串
-    
-    
-    Given two strings s and t, determine if they are isomorphic.
-    
-    Two strings are isomorphic if the characters in s can be replaced to get t.
-    
-    All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
-    
-    For example,
-    
-    Given "egg", "add", return true.
-    
-    Given "foo", "bar", return false.
-    
-    Given "paper", "title", return true.
-    
-    Note:
-    You may assume both s and t have the same length.
-    
-
-hashmap心得：
-
-  1. hashmap其实就是个python里的dic，支持key/value对，一般都与查找有关。 这里的重点在于要找的是一一对应，而不仅仅是多对一或者一对多，因此考虑两个map同时检测。 首先是一个for循环，对每个char进行判断。对每个元素，如果key在map中找不到，则建立一个相应的对应关系；如果找到了，还需要都是相互对应，即一一对应，如果没有一一对应，即其中一个不对应，那就设置为 false。
-
-  2. 时刻牢记两个条件，找到没，对应没。这也是为什么hashmap中经常出现两个if嵌套的原因。比如：
-    
-    
-    else if(m1.find(s[i]) != m1.end() && m2.find(t[i]) != m2.end()){
-                    if(m1[s[i]] != t[i] || m2[t[i]] != s[i]){
-                        flag = false;
-                        //break;
-                    }
-                }
-    
-
-  1. 一一对应，维护两个map
-    
-    
-    class Solution {
-    public:
-        bool isIsomorphic(string s, string t) {
-            bool flag = true;
-            map<char, char> m1,m2;
-            for(int i=0; i < s.size(); i++){
-                if(m1.find(s[i]) == m1.end() && m2.find(t[i]) == m2.end()){
-                    m1[s[i]] = t[i];
-                    m2[t[i]] = s[i];
-                }else if(m1.find(s[i]) != m1.end() && m2.find(t[i]) != m2.end()){
-                    if(m1[s[i]] != t[i] || m2[t[i]] != s[i]){
-                        flag = false;
-                        //break;
-                    }
-                }else{
-                    flag = false;
-                }
-            }
-            return flag;
-        }
-    };
-    
-
-### 3.2.3 特殊算法 - 有可能会考到
-
-#### Count Primes
-    
-    
-    Description:
-    
-    Count the number of prime numbers less than a non-negative number, n.
-    
-    
-
-思路一：
-
-质数的计算方法：除了本身和1，不能被其他任何数整除。判断条件就是用比他小的所有数整除。因此可以得到一个isPrime的函数用来判断是否为质数。然后主函数里循环，如果是质数，count++。 code：
-    
-    
-    class Solution {
-    public:
-        int countPrimes(int n) {
-            int count = 0;
-            for(int i = 0; i < n; i ++) {
-                if(isPrime(i)) count++;
-            }
-            return count;
-        }
-    private:
-        bool isPrime(int num) {
-            if (num<=1) return false;
-            for(int i=2; i*i <= num; i++) {
-                if(num % i == 0) return false;
-            }
-            return true;
-        }
-    
-    };
-    
-
-算法的结果是对的，但是对于 n 很大的情况，会超时：time limit exceeded，没有满足题目的要求。
-
-思路二：厄拉多塞筛法
-
-[reference](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)
-
-定义一个数组来储存哪个是质数，初始化为true。然后对每个元素，如果该数是质数，则其所有倍数都是非质数。对n个数都遍历一遍后，计算质数的个数。
-
-code：
-    
-    
-    class Solution {
-    public:
-        int countPrimes(int n) {
-            vector<bool> isPrime(n, true);
-    
-            for(int i=2; i*i < n; i++) {
-                if(isPrime[i] == false) continue;
-                for(int j=i*2; j < n; j+=i) { // j = i * i ：or j = i * 2
-                    isPrime[j] = false;
-                }
-            }
-            int count = 0;
-            for(int i=2; i < n; i++) {
-                if (isPrime[i] == true) count++;
-            }
-            return count;
-        }
-    };
-    
-
-效率比较靠后：
-<en-media hash="0155cdf4336245d938ad8fbea7050869" style="height: auto;" type="image/jpeg"/>
-
-修改条件：j = i * i ：
-<en-media hash="a111573484e4f1dddee7f4eb769ed0b5" style="height: auto;" type="image/jpeg"/>
-
-思考：
-
-  * 为什么只考虑`i*i<n的情况：因为如果11*13>n`，而最大的质数只可能出现在i^2处，如果这个都没有，那么剩余的就都是质数了
-
-  * 需要从i=2开始计算，因为1不参与讨论，而2 3全部都是质数，因此可以只从i=2处开始
-
-</div>
