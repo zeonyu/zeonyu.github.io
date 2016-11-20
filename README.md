@@ -1,3 +1,4 @@
-# zeonyu.github.io
+zeonyu.github.io
 Github pages.
-test
+
+This is the repository that record the markdown notes. Including ROS and ML related stuffs.
