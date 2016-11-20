@@ -85,8 +85,25 @@ action其实定义的是一个比较高层的语义，在make的过程中会生�
     ________________________________|________________________________        
     |                               |                                |
  FibonacciActionGoal.msg  FibonacciActionFeedback.msg  FibonacciActionFeedback.msg
-     |                              |                                |
+    |                               |                                |
  FibonacciGoal.msg        FibonacciFeedback.msg           FibonacciFeedback.msg
 ```
 
 ## server 和 client 都做了些什么
+
+### server 端做了什么
+
+首先，我们先从功能性上进行讲解。server服务器，最直观的功能就是提供某个功能的模块，然后等待client的请求，当有一个client的请求进来的时候，就调用server中相关的处理代码进行功能实现。因此server中最重要的两个概念，一个是spin，一个是callback。spin直观理解就是让服务以一直处于等待接受client请求的状态，而callback则是当收到一个client请求，调用的函数。调用```rxgraph```可以查看节点状态。
+
+下面就用fibonacci的例子来进行讲解。
+
+（略）
+
+
+### client 端做了什么
+
+首先，还是先从功能上进行讲解。既然已经有了server，那么就可以从client端直接发送目标，让server执行。具体操作的方式是，申明一个client：```actionlib::SimpleActionClient<learning_actionlib::FibonacciAction> ac("fibonacci", true);```，之后设置好goal之后，就可以发送：```ac.sendGoal(goal);```。至此，关键步骤就算结束了，之后在进行是否成功的检查就可以。调用```rxgraph```可以查看节点状态。
+
+下面就用fibonacci的例子来进行讲解。
+
+（略）
