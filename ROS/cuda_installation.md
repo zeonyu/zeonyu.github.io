@@ -3,7 +3,9 @@
 
 ## 1.1 首先查看当前机子里装的NVIDIA的默认驱动：
 
-```lspci | grep -i NVI```
+```
+lspci | grep -i NVI
+```
 
 会显示类似的信息：
 
@@ -22,6 +24,7 @@ TitanX驱动使用346.96（NVIDIA-Linux-x86_64-346.96.run）和352.30（NVIDIA-L
 
 ## 1.2 卸载默认的驱动nouveau
 
+
 ```
 rmmod nouveau
 echo "blacklist nouveau" >> /etc/modprobe.d/blacklist-nouveau.conf
@@ -29,12 +32,15 @@ echo "blacklist nouveau" >> /etc/modprobe.d/blacklist-nouveau.conf
 
 ## 1.3 停止桌面
 
+alt+ctr+f1，进入tty1，关闭lightdm：
+
 ```
 /etc/init.d/lightdm stop
 ```
 
 ## 1.4 安装NVIDIA的驱动
 
+接着就可以安装NVIDIA驱动。注意，一定要事先关掉lightdm：
 
 ```
 ./NVIDIA-Linux-x86_64-346.96.run -a -s -Z --no-opengl-files
@@ -70,7 +76,9 @@ echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib:/usr/local/cuda/lib64/:/usr/loc
 echo "export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/cuda-7.0/bin:/usr/local/cuda/bin:$PATH" >> /etc/profile
 ```
 
-## 2.3(optional) 另一个安装cuda的方法，个人认为更加简单有效
+## 2.3(optional) 另一种安装的方法
+
+另一个安装cuda的方法，个人认为更加简单有效。这是在挫折中找寻到一个方法，个人觉得非常简单有效，自己很喜欢这样的方式。
 
 ```
 sudo dpkg -i xxxxxxxx-cuda-xxxxxx.deb
